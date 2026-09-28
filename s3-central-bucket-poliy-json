@@ -1,0 +1,32 @@
+{
+  "Sid": "AllowSharedServiceInventoryCollector",
+  "Effect": "Allow",
+  "Principal": {
+    "AWS": "arn:aws:iam::211125596806:role/KMSInventoryCollectorRole"
+  },
+  "Action": [
+    "s3:ListBucket"
+  ],
+  "Resource": "arn:aws:s3:::clsa-aws-cloudtrail-381492218357"
+}
+
+####
+
+{
+  "Sid": "AllowSharedServiceInventoryObjects",
+  "Effect": "Allow",
+  "Principal": {
+    "AWS": "arn:aws:iam::211125596806:role/KMSInventoryCollectorRole"
+  },
+  "Action": [
+    "s3:GetObject",
+    "s3:PutObject"
+  ],
+  "Resource": [
+    "arn:aws:s3:::clsa-aws-cloudtrail-381492218357/current/*",
+    "arn:aws:s3:::clsa-aws-cloudtrail-381492218357/history/*",
+    "arn:aws:s3:::clsa-aws-cloudtrail-381492218357/athena-results/*"
+  ]
+}
+
+

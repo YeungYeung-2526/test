@@ -1,0 +1,38 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ListApprovedMonitoringPrefixes",
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetBucketLocation"
+      ],
+      "Resource": "arn:aws:s3:::clsa-aws-cloudtrail-381492218357",
+      "Condition": {
+        "StringLike": {
+          "s3:prefix": [
+            "AWSLogs/*",
+            "current/*",
+            "history/*",
+            "athena-results/*"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "ReadMonitoringObjects",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion"
+      ],
+      "Resource": [
+        "arn:aws:s3:::clsa-aws-cloudtrail-381492218357/AWSLogs/*",
+        "arn:aws:s3:::clsa-aws-cloudtrail-381492218357/current/*",
+        "arn:aws:s3:::clsa-aws-cloudtrail-381492218357/history/*",
+        "arn:aws:s3:::clsa-aws-cloudtrail-381492218357/athena-results/*"
+      ]
+    }
+  ]
+}

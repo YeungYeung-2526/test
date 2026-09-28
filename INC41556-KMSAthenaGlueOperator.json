@@ -1,0 +1,75 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "OperateNamedAthenaWorkgroup",
+      "Effect": "Allow",
+      "Action": [
+        "athena:GetWorkGroup",
+        "athena:UpdateWorkGroup",
+        "athena:StartQueryExecution",
+        "athena:StopQueryExecution",
+        "athena:GetQueryExecution",
+        "athena:GetQueryResults",
+        "athena:ListQueryExecutions",
+        "athena:GetDataCatalog"
+      ],
+      "Resource": "arn:aws:athena:*:211125596806:workgroup/kms-inventory-grafana"
+    },
+    {
+      "Sid": "ManageKmsMonitoringCatalog",
+      "Effect": "Allow",
+      "Action": [
+        "glue:GetDatabase",
+        "glue:GetDatabases",
+        "glue:CreateDatabase",
+        "glue:UpdateDatabase",
+        "glue:GetTable",
+        "glue:GetTables",
+        "glue:CreateTable",
+        "glue:UpdateTable",
+        "glue:DeleteTable",
+        "glue:GetPartitions",
+        "glue:BatchCreatePartition",
+        "glue:BatchDeletePartition"
+      ],
+      "Resource": [
+        "arn:aws:glue:*:211125596806:catalog",
+        "arn:aws:glue:*:211125596806:database/kms_monitoring",
+        "arn:aws:glue:*:211125596806:table/kms_monitoring/*"
+      ]
+    },
+    {
+      "Sid": "ListInventoryAndAthenaPrefixes",
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetBucketLocation"
+      ],
+      "Resource": "arn:aws:s3:::clsa-aws-cloudtrail-381492218357",
+      "Condition": {
+        "StringLike": {
+          "s3:prefix": [
+            "current/*",
+            "history/*",
+            "athena-results/*"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "ReadInventoryWriteQueryResults",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:AbortMultipartUpload"
+      ],
+      "Resource": [
+        "arn:aws:s3:::clsa-aws-cloudtrail-381492218357/current/*",
+        "arn:aws:s3:::clsa-aws-cloudtrail-381492218357/history/*",
+        "arn:aws:s3:::clsa-aws-cloudtrail-381492218357/athena-results/*"
+      ]
+    }
+  ]
+}

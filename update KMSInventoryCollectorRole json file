@@ -1,0 +1,30 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sts:AssumeRole",
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": [
+        "arn:aws:iam::*:role/KMSInventoryReadRole"
+      ]
+    },
+    {
+      "Sid": "S3InventoryWrite",
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::clsa-aws-cloudtrail-381492218357",
+        "arn:aws:s3:::clsa-aws-cloudtrail-381492218357/*"
+      ]
+    }
+  ]
+}

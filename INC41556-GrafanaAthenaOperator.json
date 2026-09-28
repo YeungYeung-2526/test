@@ -1,0 +1,69 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "QueryNamedAthenaWorkgroup",
+      "Effect": "Allow",
+      "Action": [
+        "athena:StartQueryExecution",
+        "athena:StopQueryExecution",
+        "athena:GetQueryExecution",
+        "athena:GetQueryResults",
+        "athena:GetWorkGroup",
+        "athena:GetDataCatalog"
+      ],
+      "Resource": "arn:aws:athena:*:211125596806:workgroup/kms-inventory-grafana"
+    },
+    {
+      "Sid": "ReadKmsCatalog",
+      "Effect": "Allow",
+      "Action": [
+        "glue:GetDatabase",
+        "glue:GetDatabases",
+        "glue:GetTable",
+        "glue:GetTables",
+        "glue:GetPartitions"
+      ],
+      "Resource": [
+        "arn:aws:glue:*:211125596806:catalog",
+        "arn:aws:glue:*:211125596806:database/kms_monitoring",
+        "arn:aws:glue:*:211125596806:table/kms_monitoring/*"
+      ]
+    },
+    {
+      "Sid": "ListApprovedS3Prefixes",
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetBucketLocation"
+      ],
+      "Resource": "arn:aws:s3:::clsa-aws-cloudtrail-381492218357",
+      "Condition": {
+        "StringLike": {
+          "s3:prefix": [
+            "current/*",
+            "athena-results/*"
+          ]
+        }
+      }
+    },
+    {
+      "Sid": "ReadInventoryAndQueryResults",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": [
+        "arn:aws:s3:::clsa-aws-cloudtrail-381492218357/current/*",
+        "arn:aws:s3:::clsa-aws-cloudtrail-381492218357/athena-results/*"
+      ]
+    },
+    {
+      "Sid": "WriteAthenaQueryResults",
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject",
+        "s3:AbortMultipartUpload"
+      ],
+      "Resource": "arn:aws:s3:::clsa-aws-cloudtrail-381492218357/athena-results/*"
+    }
+  ]
+}

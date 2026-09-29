@@ -1,0 +1,26 @@
+aws sts get-caller-identity
+
+aws kms describe-key \
+  --key-id arn:aws:kms:us-east-1:211125596806:key/cca96a48-7cb4-4cec-873d-7d2420417573 \
+  --region us-east-1 \
+  --query 'KeyMetadata.{Arn:Arn,State:KeyState,Usage:KeyUsage,Spec:KeySpec}'
+
+
+  printf 'kms-operation-test' > test.txt
+
+aws kms encrypt \
+  --key-id arn:aws:kms:us-east-1:211125596806:key/cca96a48-7cb4-4cec-873d-7d2420417573 \
+  --plaintext fileb://test.txt \
+  --region us-east-1 \
+  --query CiphertextBlob \
+  --output text | base64 --decode > encrypted.bin
+
+aws kms decrypt \
+  --key-id arn:aws:kms:us-east-1:211125596806:key/cca96a48-7cb4-4cec-873d-7d2420417573 \
+  --ciphertext-blob fileb://encrypted.bin \
+  --region us-east-1 \
+  --query Plaintext \
+  --output text | base64 --decode > decrypted.txt
+
+cmp test.txt decrypted.txt && echo 'Encrypt/Decrypt succeeded'
+`

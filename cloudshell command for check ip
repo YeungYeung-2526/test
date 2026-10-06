@@ -1,0 +1,11 @@
+搵 IP 屬於邊個 ENI
+
+aws ec2 describe-network-interfaces \
+--filters Name=addresses.private-ip-address,Values=10.240.169.68 \
+--query 'NetworkInterfaces[*].[NetworkInterfaceId,PrivateIpAddress,VpcId,SubnetId,Description]' \
+--output table
+
+##
+check region
+aws configure get region
+aws sts get-caller-identity

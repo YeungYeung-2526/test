@@ -1,0 +1,13 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowClientGrafanaToAssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "<CLIENT_GRAFANA_AWS_IDENTITY_ARN>"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AthenaDiscovery",
+      "Effect": "Allow",
+      "Action": [
+        "athena:ListWorkGroups",
+        "athena:ListDataCatalogs",
+        "athena:GetDataCatalog",
+        "athena:ListDatabases",
+        "athena:GetDatabase",
+        "athena:ListTableMetadata",
+        "athena:GetTableMetadata",
+        "athena:ListEngineVersions"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "AthenaQueryWorkgroup",
+      "Effect": "Allow",
+      "Action": [
+        "athena:GetWorkGroup",
+        "athena:StartQueryExecution",
+        "athena:StopQueryExecution",
+        "athena:GetQueryExecution",
+        "athena:GetQueryResults",
+        "athena:GetQueryResultsStream",
+        "athena:GetQueryRuntimeStatistics",
+        "athena:ListQueryExecutions",
+        "athena:BatchGetQueryExecution"
+      ],
+      "Resource": "arn:aws:athena:us-east-1:211125596806:workgroup/shared_monitoring-inventory-grafana"
+    },
+    {
+      "Sid": "GlueCatalogRead",
+      "Effect": "Allow",
+      "Action": [
+        "glue:GetDatabase",
+        "glue:GetDatabases",
+        "glue:GetTable",
+        "glue:GetTables",
+        "glue:SearchTables",
+        "glue:GetTableVersion",
+        "glue:GetTableVersions",
+        "glue:GetPartition",
+        "glue:GetPartitions",
+        "glue:BatchGetPartition"
+      ],
+      "Resource": [
+        "arn:aws:glue:us-east-1:211125596806:catalog",
+        "arn:aws:glue:us-east-1:211125596806:database/shared_monitoring",
+        "arn:aws:glue:us-east-1:211125596806:table/shared_monitoring/*"
+      ]
+    },
+    {
+      "Sid": "ListMonitoringBucket",
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetBucketLocation",
+        "s3:ListBucketMultipartUploads"
+      ],
+      "Resource": "arn:aws:s3:::clsa-aws-shared-monitoring-211125596806"
+    },
+    {
+      "Sid": "ReadInventoryData",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::clsa-aws-shared-monitoring-211125596806/current/*",
+        "arn:aws:s3:::clsa-aws-shared-monitoring-211125596806/history/*"
+      ]
+    },
+    {
+      "Sid": "AthenaResultsAccess",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:AbortMultipartUpload",
+        "s3:ListMultipartUploadParts"
+      ],
+      "Resource": "arn:aws:s3:::clsa-aws-shared-monitoring-211125596806/athena-results/*"
+    }
+  ]
+}

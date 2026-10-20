@@ -1,0 +1,13 @@
+fields
+    @timestamp,
+    eventName,
+    awsRegion,
+    recipientAccountId,
+    requestParameters.keyId,
+    userIdentity.arn,
+    sourceIPAddress,
+    errorCode
+| filter eventSource = "kms.amazonaws.com"
+| filter eventName = "Encrypt" or eventName = "Decrypt"
+| sort @timestamp desc
+| limit 1000

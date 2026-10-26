@@ -1,0 +1,18 @@
+SELECT
+  account_name AS "AWS Account Name",
+  account_id AS "AWS Account ID",
+  region AS "Region",
+  primary_alias AS "Key Alias",
+  key_id AS "Key ID",
+  key_state AS "Key State",
+  key_manager AS "Key Manager",
+  key_spec AS "Key Type",
+  rotation_enabled AS "Rotation Enabled",
+  rotation_period_days AS "Rotation Days",
+  next_rotation_date AS "Next Rotation",
+  creation_date AS "Created",
+  deletion_date AS "Deletion Date",
+  description AS "Description"
+FROM kms_monitoring.v_kms_inventory
+WHERE key_id IS NOT NULL
+ORDER BY account_name, region, primary_alias;
